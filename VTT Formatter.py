@@ -14,7 +14,7 @@ import sys
 # $ VTT Formatter.py [DIR]
 # $ VTT Formatter.py ./subs
 
-print "Searching inside : "+sys.argv[1]
+print(f"Searching inside : {sys.argv[1]}")
 
 newdirectory = sys.argv[1]+"txt"
 if not os.path.exists(newdirectory):
@@ -25,19 +25,19 @@ for file in os.listdir(sys.argv[1]): #Gets All the files inside DIR (Argument1)
 
     newfile = open(os.path.join(newdirectory,file.replace(".vtt", ".txt")),'w') #Creates a newfile
     if file.endswith(".vtt"):
-        print "Formating : "+file #Shows current File
+        print("Formating : "+file) #Shows current File
         with open(os.path.join(sys.argv[1], file)) as f:
 
             previous = '0'
             for line in f: #a line for each file
-                 if not line.startswith('0') : #Couldnt Get the "or" working
+                 if line.find('-->') == -1 : #Avoid timestanps
                      if not line.startswith('WEBVTT') :#Cleaning
                          if not line.startswith('Kind:') :#Cleaning
                              if not line.startswith('Language:') :#Cleaning
                                  if not line.startswith('\n') :#Cleaning
                                     if not line.startswith('[BLANK_AUDIO]') :#Cleaning
                                         if not line.startswith(previous) :#Avoiding repetitions 
-                                        newfile.write("%s" % line) #Add new line to new file
-                                        combined.write("%s" % line) #Add new line to combinedfile
-                                        previous = line
-            print "DONE!" #NEXT ONE!
+                                            newfile.write("%s" % line) #Add new line to new file
+                                            combined.write("%s" % line) #Add new line to combinedfile
+                                            previous = line
+            print("DONE!") #NEXT ONE!
