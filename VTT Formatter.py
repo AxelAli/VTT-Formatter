@@ -28,6 +28,7 @@ for file in os.listdir(sys.argv[1]): #Gets All the files inside DIR (Argument1)
         print "Formating : "+file #Shows current File
         with open(os.path.join(sys.argv[1], file)) as f:
 
+            previous = '0'
             for line in f: #a line for each file
                  if not line.startswith('0') : #Couldnt Get the "or" working
                      if not line.startswith('WEBVTT') :#Cleaning
@@ -35,6 +36,8 @@ for file in os.listdir(sys.argv[1]): #Gets All the files inside DIR (Argument1)
                              if not line.startswith('Language:') :#Cleaning
                                  if not line.startswith('\n') :#Cleaning
                                     if not line.startswith('[BLANK_AUDIO]') :#Cleaning
+                                        if not line.startswith(previous) :#Avoiding repetitions 
                                         newfile.write("%s" % line) #Add new line to new file
                                         combined.write("%s" % line) #Add new line to combinedfile
+                                        previous = line
             print "DONE!" #NEXT ONE!
